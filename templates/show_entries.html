@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+Number : {{entries | length}}
+  <ul class=entries>
+  {% for entry in entries %}
+  <li><h2>{{ entry.title }}</h2> <a href="{{ entry.link }}">{{ entry.link }}</a> by 
+      {% for author in entry.authors %}
+        {{author.name}},
+      {% endfor %}
+      (submitted {{entry.datetime}})
+      (<a href="/articles?like={{ entry.id }}">similar to</a>)
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

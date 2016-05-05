@@ -1,0 +1,2 @@
+#!/bin/sh
+publish --to=store --options="--exclude '.git' --exclude 'output' --exclude 'articles.db' --exclude 'vectorizer.pkl'"
