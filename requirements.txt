@@ -1,3 +1,7 @@
 flask
 Flask-cache
 sqlalchemy
+bokeh
+feedparser
+lda
+sklearn
