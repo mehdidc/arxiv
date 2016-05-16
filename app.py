@@ -11,6 +11,7 @@ from scipy.sparse import issparse
 
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from sklearn.pipeline import make_pipeline
 
 from helpers import to_multiline, replace_config
 
@@ -80,8 +81,13 @@ def embedding():
         vects = vects.toarray()
     
     #E = PCA(n_components=2)
-    E = TSNE(n_components=2, perplexity=15, early_exaggeration=10)
+    E = make_pipeline(
+        PCA(n_components=50),
+        TSNE(n_components=2, perplexity=10, early_exaggeration=10, verbose=1)
+    )
     embed = E.fit_transform(vects)
+    _, pca = E.steps[0]
+    print(pca.explained_variance_ratio_)
     titles = map(lambda article: article.title, articles)
     titles = map(lambda title: to_multiline(title, max_line_length=30), titles)
     titles = map(lambda title: "".join(title), titles)
@@ -106,7 +112,7 @@ def embedding():
     tools = "resize, hover, save, pan,wheel_zoom,box_zoom,reset,resize"
     fig = figure(title="paper embedding", tools=tools,
                  width=1400, height=800)
-    fig.scatter("x", "y", source=ds, size=15)
+    fig.scatter("x", "y", source=ds, size=5)
     hover = fig.select(dict(type=HoverTool))
     hover.tooltips = OrderedDict([
         ("title", "@title"),
