@@ -83,7 +83,7 @@ def embedding():
     #E = PCA(n_components=2)
     E = make_pipeline(
         PCA(n_components=50),
-        TSNE(n_components=2, perplexity=10, early_exaggeration=10, verbose=1)
+        TSNE(n_components=2, perplexity=30, early_exaggeration=4, verbose=1)
     )
     embed = E.fit_transform(vects)
     _, pca = E.steps[0]
@@ -112,7 +112,7 @@ def embedding():
     tools = "resize, hover, save, pan,wheel_zoom,box_zoom,reset,resize"
     fig = figure(title="paper embedding", tools=tools,
                  width=1400, height=800)
-    fig.scatter("x", "y", source=ds, size=5)
+    fig.scatter("x", "y", source=ds, size=5, marker='cross')
     hover = fig.select(dict(type=HoverTool))
     hover.tooltips = OrderedDict([
         ("title", "@title"),
